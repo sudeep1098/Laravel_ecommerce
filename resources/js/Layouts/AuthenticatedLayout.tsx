@@ -29,6 +29,12 @@ export default function Authenticated({ header, children }: PropsWithChildren<{ 
                                 <NavLink href={route('chirps.index')} active={route().current('chirps.index')}>
                                     Chirps
                                 </NavLink>
+                                <NavLink href={route('categories.index')} active={route().current('categories.index')}>
+                                    Category
+                                </NavLink>
+                                <NavLink href={route('products.index')} active={route().current('products.index')}>
+                                    Product
+                                </NavLink>
                             </div>
                         </div>
 
@@ -102,6 +108,12 @@ export default function Authenticated({ header, children }: PropsWithChildren<{ 
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={route('chirps.index')} active={route().current('chirps.index')}>
                             Chirps
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('categories.index')} active={route().current('categories.index')}>
+                            Category
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('products.index')} active={route().current('products.index')}>
+                            Product
                         </ResponsiveNavLink>
                     </div>
 

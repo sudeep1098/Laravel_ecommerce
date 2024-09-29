@@ -15,7 +15,6 @@ export default function Index({ auth, chirps: initialChirps }: any) {
     const [loading, setLoading] = useState(false);
     const observer = useRef<IntersectionObserver | null>(null);
     const lastChirpRef = useRef<HTMLDivElement | null>(null);
-    console.log(initialChirps);
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
