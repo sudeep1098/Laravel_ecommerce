@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,5 +39,10 @@ Route::resource('categories', CategoryController::class)
 Route::resource('products', ProductController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
+
+Route::get('/checkout', [StripeController::class, 'paymentPage'])->name('stripe.checkout.page'); // Displays the checkout page
+Route::post('/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout'); // Handles the checkout process
+Route::get('/payment-success', [StripeController::class, 'paymentSuccess'])->name('payment.success'); // Success page
+Route::get('/payment-failed', [StripeController::class, 'paymentFailed'])->name('payment.failed'); // Failure page
 
 require __DIR__ . '/auth.php';
