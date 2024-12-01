@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
+import axios from "axios";
 
-const stripePromise = loadStripe("pk_test_51Q59mfAMl5nMmtFxfR98FQHtAjCN3jAcASAD3aAFMXVpoL9E3d6k4swakejKblr0hiCubMp5fZsRYwx6RHFhVSLs00o5j4I3dT");
+const stripePromise = loadStripe(
+    'pk_test_51Q59mfAMl5nMmtFxfR98FQHtAjCN3jAcASAD3aAFMXVpoL9E3d6k4swakejKblr0hiCubMp5fZsRYwx6RHFhVSLs00o5j4I3dT'
+);
 
 interface CheckoutSessionResponse {
     id: string;
@@ -14,17 +17,9 @@ const Checkout = () => {
         setLoading(true);
 
         try {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
-
-            const response = await fetch("/checkout", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken || "",
-                },
+            const { data } = await axios.post<CheckoutSessionResponse>("/stripe/checkout", {
+                cart_id: 1,
             });
-
-            const session: CheckoutSessionResponse = await response.json();
 
             const stripe: Stripe | null = await stripePromise;
 
@@ -33,15 +28,15 @@ const Checkout = () => {
             }
 
             const { error } = await stripe.redirectToCheckout({
-                sessionId: session.id,
+                sessionId: data.id,
             });
 
             if (error) {
-                console.error("Error during checkout:", error);
+                console.error("Error during checkout:", error.message);
                 alert("Checkout failed. Please try again.");
             }
-        } catch (error) {
-            console.error("Checkout error:", error);
+        } catch (error: any) {
+            console.error("Checkout error:", error?.response?.data || error.message);
             alert("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
@@ -63,8 +58,8 @@ const Checkout = () => {
                 <button
                     onClick={handleCheckout}
                     disabled={loading}
-                    className={`mt-6 w-full py-3 bg-blue-500 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 ${
-                        loading ? "opacity-50 cursor-not-allowed" : ""
+                    className={`mt-6 w-full py-3 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 ${
+                        loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
                     }`}
                 >
                     {loading ? "Processing..." : "Checkout"}

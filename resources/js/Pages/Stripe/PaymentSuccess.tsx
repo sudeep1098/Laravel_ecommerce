@@ -12,7 +12,7 @@ const PaymentSuccess = ({ message = 'Your payment was successful!' }: PaymentSuc
                 <p className="mt-4 text-lg text-gray-700">{message}</p>
                 <div className="mt-6">
                     <a
-                        href="/checkout" // URL to navigate to the checkout page
+                        href="/stripe/checkout" // URL to navigate to the checkout page
                         className="py-2 px-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-200"
                     >
                         Go to Dashboard

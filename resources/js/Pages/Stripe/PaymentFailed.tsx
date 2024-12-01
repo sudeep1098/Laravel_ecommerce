@@ -11,7 +11,7 @@ const PaymentFailed = ({ message = 'Your payment failed. Please try again.' }: P
                 <h1 className="text-4xl font-semibold text-red-600">Payment Failed</h1>
                 <p className="mt-4 text-lg text-gray-700">{message}</p>
                 <div className="mt-6">
-                    <a href="/checkout" className="py-2 px-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-200">
+                    <a href="/stripe/checkout" className="py-2 px-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition duration-200">
                         Try Again
                     </a>
                 </div>

@@ -40,9 +40,13 @@ Route::resource('products', ProductController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::get('/checkout', [StripeController::class, 'paymentPage'])->name('stripe.checkout.page'); // Displays the checkout page
-Route::post('/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout'); // Handles the checkout process
-Route::get('/payment-success', [StripeController::class, 'paymentSuccess'])->name('payment.success'); // Success page
-Route::get('/payment-failed', [StripeController::class, 'paymentFailed'])->name('payment.failed'); // Failure page
+Route::prefix('stripe')->name('stripe.')->group(function () {
+    Route::get('/checkout', [StripeController::class, 'paymentPage'])->name('checkout.page');
+    Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+    Route::get('/payment-success', [StripeController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('/payment-failed', [StripeController::class, 'paymentFailed'])->name('payment.failed');
+    Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
+});
+
 
 require __DIR__ . '/auth.php';
