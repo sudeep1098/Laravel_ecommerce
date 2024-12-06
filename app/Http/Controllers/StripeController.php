@@ -22,7 +22,6 @@ class StripeController extends Controller
         return Inertia::render('Stripe/Checkout');
     }
 
-    // Handle Stripe checkout process
     public function checkout(Request $request)
     {
         $validated = $request->validate([
@@ -81,61 +80,55 @@ class StripeController extends Controller
 
     public function webhook(Request $request)
     {
-        // Retrieve Stripe signature header
-        $sigHeader = $request->header('Stripe-Signature');
+        Stripe::setApiKey(config('services.stripe.secret'));
 
-        // Retrieve the request's raw body
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
         $payload = $request->getContent();
 
         try {
-            // Verify the payload using the signing secret
             $event = Webhook::constructEvent(
                 $payload,
-                $sigHeader,
+                $sig_header,
                 config('services.stripe.webhook')
             );
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
-            // Invalid signature
             Log::error('Stripe webhook signature verification failed.', ['error' => $e->getMessage()]);
             return response()->json(['error' => 'Invalid signature'], 400);
         } catch (\UnexpectedValueException $e) {
-            // Invalid payload
             Log::error('Invalid Stripe webhook payload.', ['error' => $e->getMessage()]);
             return response()->json(['error' => 'Invalid payload'], 400);
         }
 
-        // Handle the event
-        switch ($event->type) {
-            case 'payment_intent.succeeded':
-                $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
-                $this->handlePaymentIntentSucceeded($paymentIntent);
-                break;
+        try {
+            switch ($event->type) {
+                case 'payment_intent.succeeded':
+                    $this->handlePaymentIntentSucceeded($event->data->object);
+                    break;
 
-            case 'checkout.session.completed':
-                $session = $event->data->object; // contains a \Stripe\Checkout\Session
-                $this->handleCheckoutSessionCompleted($session);
-                break;
+                case 'checkout.session.completed':
+                    $this->handleCheckoutSessionCompleted($event->data->object);
+                    break;
 
-            default:
-                Log::info('Unhandled event type: ' . $event->type);
-                break;
+                default:
+                    Log::info('Unhandled event type: ' . $event->type);
+                    break;
+            }
+        } catch (\Exception $e) {
+            Log::error('Error handling Stripe webhook.', ['error' => $e->getMessage()]);
+            return response()->json(['error' => 'Webhook handling error'], 500);
         }
 
-        // Acknowledge receipt of the event
         return response()->json(['status' => 'success'], 200);
     }
 
-    // Example handler for payment intent succeeded
     protected function handlePaymentIntentSucceeded($paymentIntent)
     {
         // Find the order transaction by the Stripe payment intent ID
-        $orderTransaction = OrderTransaction::where('transaction_id', $paymentIntent->id)->first();
+        $orderTransaction = OrderTransaction::latest()->first();
 
         if ($orderTransaction) {
-            // Update transaction status
             $orderTransaction->update(['status' => 'succeeded']);
 
-            // Update related order status
             $order = $orderTransaction->order;
             if ($order) {
                 $order->update(['status' => 'paid']);
@@ -143,10 +136,9 @@ class StripeController extends Controller
         }
     }
 
-    // Example handler for checkout session completed
     protected function handleCheckoutSessionCompleted($session)
     {
-        $orderTransaction = OrderTransaction::where('transaction_id', $session->payment_intent)->first();
+        $orderTransaction = OrderTransaction::latest()->first();
 
         if ($orderTransaction) {
             $orderTransaction->update(['status' => 'succeeded']);
@@ -158,8 +150,6 @@ class StripeController extends Controller
         }
     }
 
-
-    // Display success page
     public function paymentSuccess()
     {
         return Inertia::render('Stripe/PaymentSuccess', [
@@ -167,7 +157,6 @@ class StripeController extends Controller
         ]);
     }
 
-    // Display failure page
     public function paymentFailed()
     {
         return Inertia::render('Stripe/PaymentFailed', [
