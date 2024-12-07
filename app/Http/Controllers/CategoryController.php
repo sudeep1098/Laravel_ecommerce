@@ -46,4 +46,25 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully!');
     }
+
+    public function show($id)
+    {
+        $category = Category::findOrFail($id);
+        $products = $category->products()->take(10)->get();
+
+        return Inertia::render('CategoryPage/index', [
+            'category' => [
+                'id' => $category->id,
+                'name' => $category->name,
+                'image' => $category->image,
+            ],
+            'products' => $products->map(fn($product) => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'image' => $product->image,
+                'price' => $product->price,
+            ]),
+        ]);
+    }
+
 }

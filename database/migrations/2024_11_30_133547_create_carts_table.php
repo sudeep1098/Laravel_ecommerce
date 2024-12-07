@@ -10,6 +10,9 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            $table->json('data');
+            $table->integer('quantity')->default(1);
+            $table->decimal('total_amount', 10, 2)->default(0);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

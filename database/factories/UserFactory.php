@@ -41,4 +41,15 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function sudeep(): static
+    {
+        return $this->state([
+            'name' => 'Sudeep',
+            'email' => 'sudeep@geeky.dev',
+            'email_verified_at' => now(),
+            'password' => Hash::make('12345678'),
+            'remember_token' => Str::random(10),
+        ]);
+    }
 }

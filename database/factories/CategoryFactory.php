@@ -13,6 +13,8 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
+            'image' => $this->faker->imageUrl(),
+            'slug' => $this->faker->unique()->slug,
         ];
     }
 }

@@ -13,11 +13,13 @@ class CartItemFactory extends Factory
 
     public function definition()
     {
+        $product = Product::inRandomOrder()->first();
+
         return [
             'cart_id' => Cart::inRandomOrder()->first()->id,
-            'product_id' => Product::inRandomOrder()->first()->id,
+            'data' => '[]',
             'quantity' => $this->faker->numberBetween(1, 5),
-            'price' => $this->faker->randomFloat(2, 5, 100),
+            'total_amount' => $product->price * $this->faker->numberBetween(1, 5),
         ];
     }
 }

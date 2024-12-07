@@ -247,6 +247,15 @@
     nprogress "^0.2.0"
     qs "^6.9.0"
 
+"@inertiajs/inertia@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.npmjs.org/@inertiajs/inertia/-/inertia-0.11.1.tgz"
+  integrity sha512-btmV53c54oW4Z9XF0YyTdIUnM7ue0ONy3/KJOz6J1C5CYIwimiKfDMpz8ZbGJuxS+SPdOlNsqj2ZhlHslpJRZg==
+  dependencies:
+    axios "^0.21.1"
+    deepmerge "^4.0.0"
+    qs "^6.9.0"
+
 "@inertiajs/react@^1.0.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@inertiajs/react/-/react-1.2.0.tgz"
@@ -552,6 +561,13 @@ autoprefixer@^10.4.20:
     picocolors "^1.0.1"
     postcss-value-parser "^4.2.0"
 
+axios@^0.21.1:
+  version "0.21.4"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
+
 axios@^1.6.0, axios@^1.7.4:
   version "1.7.7"
   resolved "https://registry.npmjs.org/axios/-/axios-1.7.7.tgz"
@@ -842,7 +858,7 @@ fill-range@^7.1.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-follow-redirects@^1.15.6:
+follow-redirects@^1.14.0, follow-redirects@^1.15.6:
   version "1.15.9"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.9.tgz"
   integrity sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==

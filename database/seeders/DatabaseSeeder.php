@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Seed users
-        $users = User::factory(10)->create();
+        User::factory()->sudeep()->create();
+        User::factory(10)->create();
         // $users = User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
@@ -36,29 +37,25 @@ class DatabaseSeeder extends Seeder
         CategoryProduct::factory(20)->create();
 
         // Seed carts for each user
-        foreach ($users as $user) {
-            Cart::factory()->create([
-                'user_id' => $user->id,
-            ]);
-        }
+        // Cart::factory(10)->create();
 
         // Seed cart items
-        CartItem::factory(50)->create();
+        // CartItem::factory(10)->create();
 
         // Seed orders
-        Order::factory(15)->create();
+        // Order::factory(15)->create();
 
         // Seed order items
-        OrderItem::factory(50)->create();
+        // OrderItem::factory(50)->create();
 
         // Seed order transactions
-        OrderTransaction::factory(20)->create();
+        // OrderTransaction::factory(20)->create();
 
         // Seed order logs
-        OrderLog::factory(30)->create();
+        // OrderLog::factory(30)->create();
 
         // Seed order transaction refunds
-        OrderTransactionRefund::factory(10)->create();
+        // OrderTransactionRefund::factory(10)->create();
     }
 }
 

@@ -10,15 +10,14 @@ return new class extends Migration
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cart_id');
-            $table->unsignedBigInteger('product_id');
+            $table->json('data');
             $table->integer('quantity')->default(1);
-            $table->decimal('price', 10, 2); // Price at the time the product is added to the cart
+            $table->decimal('total_amount', 10, 2)->default(0);
+            $table->unsignedBigInteger('cart_id');
             $table->timestamps();
 
             // Define foreign keys
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

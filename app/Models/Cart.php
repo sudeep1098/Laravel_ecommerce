@@ -9,7 +9,16 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id'];
+    protected $casts = [
+        'data' => 'string',
+        'total_amount' => 'float',
+    ];
+
+    protected $fillable = ['user_id', 'data', 'quantity', 'total_amount'];
+
+    protected $attributes = [
+        'data' => '[]',
+    ];
 
     public function user()
     {

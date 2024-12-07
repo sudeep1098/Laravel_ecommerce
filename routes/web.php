@@ -1,20 +1,24 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
+use App\Models\Category;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $categories = Category::all();
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'categories' => $categories
     ]);
 });
 
@@ -40,7 +44,18 @@ Route::resource('products', ProductController::class)
     ->only(['index', 'store', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::prefix('stripe')->name('stripe.')->group(function () {
+Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::patch('/cart/{cartId}/items/{itemId}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cartId}/items/{itemId}', [CartController::class, 'destroy'])->name('cart.destroy');
+});
+
+Route::middleware(['auth', 'verified'])->prefix('stripe')->name('stripe.')->group(function () {
     Route::get('/checkout', [StripeController::class, 'paymentPage'])->name('checkout.page');
     Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout');
     Route::get('/payment-success', [StripeController::class, 'paymentSuccess'])->name('payment.success');

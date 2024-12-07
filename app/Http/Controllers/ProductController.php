@@ -42,10 +42,37 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $categoryIds = $product->categories->pluck('id');
+        $relatedProducts = Product::whereIn('id', function ($query) use ($categoryIds) {
+            $query->select('product_id')
+                ->from('category_products')
+                ->whereIn('category_id', $categoryIds);
+        })
+        ->where('id', '!=', $product->id)
+        ->take(5)
+        ->get();
+
+        return Inertia::render('ProductPage/index', [
+            'product' => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'image' => $product->image,
+                'price' => $product->price,
+            ],
+            'relatedProducts' => $relatedProducts->map(fn($related) => [
+                'id' => $related->id,
+                'name' => $related->name,
+                'image' => $related->image,
+                'price' => $related->price,
+            ]),
+        ]);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

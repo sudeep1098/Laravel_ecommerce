@@ -73,7 +73,7 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                     </label>
                 </div>
 
-                <div className="flex items-center justify-end mt-4">
+                <div className="flex items-center justify-between mt-4">
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
@@ -82,6 +82,12 @@ export default function Login({ status, canResetPassword }: { status?: string, c
                             Forgot your password?
                         </Link>
                     )}
+                    <Link
+                        href={route('register')}
+                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                    >
+                        Register
+                    </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in

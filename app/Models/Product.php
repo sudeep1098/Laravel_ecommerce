@@ -9,7 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','image'];
+
+    protected $casts = [
+        'price' => 'float',
+    ];
+
+    protected $fillable = [
+        'name', 'image', 'description', 'price', 'stock_quantity', 'sku',
+    ];
 
     public function categories(): BelongsToMany
     {
