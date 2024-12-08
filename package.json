@@ -12,6 +12,7 @@
         "@types/node": "^18.13.0",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.10",
+        "@types/react-slick": "^0.23.13",
         "@vitejs/plugin-react": "^4.2.0",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
@@ -26,6 +27,9 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
         "@stripe/stripe-js": "^5.2.0",
-        "dayjs": "^1.11.13"
+        "dayjs": "^1.11.13",
+        "motion": "^11.13.1",
+        "react-slick": "^0.30.2",
+        "slick-carousel": "^1.8.1"
     }
 }
