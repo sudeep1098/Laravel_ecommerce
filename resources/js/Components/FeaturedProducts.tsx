@@ -20,7 +20,7 @@ const FeaturedProducts = ({ products }: { products: any[] }) => {
                         key={product.id}
                         initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }} // Animation based on index
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false, amount: 0.2 }}
+                        viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.6 }}
                         whileHover={{ scale: 1.05 }}
                         className="group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"

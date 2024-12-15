@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swiper-container-curve {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.swiper-container-curve::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -30px;
+    width: 150px;
+    height: 120px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 30%;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+.swiper-slide .absolute {
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.swiper-button-prev, .swiper-button-next {
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.swiper-button-prev:hover, .swiper-button-next:hover {
+    transform: scale(1.1);
+}
+
+.testimonial-container .swiper-slide {
+    height: auto !important;
+}
+
+.testimonial-container .swiper-slide div {
+    transform: scale(0.95);
+}
+
+.testimonial-container .swiper-slide-active div {
+    transform: scale(1);
+}

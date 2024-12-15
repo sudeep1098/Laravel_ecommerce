@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head, router } from '@inertiajs/react';
-import ProductComponent from '@/Components/Product';
+import ProductComponent from '@/Components/admin/Product';
 import { Product } from '@/types/interface';
 
 interface Props {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import Chirp from '@/Components/Chirp';
+import Chirp from '@/Components/admin/Chirp';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head, router } from '@inertiajs/react';

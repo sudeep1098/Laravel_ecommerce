@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
+import SearchBar from './SearchBar';
 
-const Navbar = ({ auth }: { auth: any }) => {
+const Navbar = ({ auth, products }: { auth: any, products: any }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen((prevState) => !prevState);
     };
 
-    // Array for dynamic navigation items
     const navItems = [
         { name: 'Home', href: '/' },
         { name: 'Categories', href: '/categories' },
@@ -31,13 +31,17 @@ const Navbar = ({ auth }: { auth: any }) => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="bg-white dark:bg-gray-900 shadow-md fixed w-full z-50"
+            className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50"
         >
             <div className="container mx-auto flex justify-between items-center py-4 px-6">
-                {/* Brand Name */}
                 <Link href="/" className="text-2xl font-bold text-[#FF2D20]">
                     Brand Name
                 </Link>
+
+                {/* Search Bar */}
+                <div className="hidden md:block w-1/2">
+                    <SearchBar products={products} />
+                </div>
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex space-x-6">

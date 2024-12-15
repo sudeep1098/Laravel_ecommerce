@@ -10,8 +10,18 @@ import Highlights from '@/Components/Highlights';
 
 export default function Welcome({ auth, categories, products }: { auth: any; categories: any, products: any }) {
     const banners = [
-        { id: 1, image: '/images/banner1.jpg', title: 'Welcome to Brand Name' },
-        { id: 2, image: '/images/banner2.jpg', title: 'Explore Our Categories' },
+        {
+            videoUrl: "/videos/video1.mp4",
+            title: "Banner 1",
+        },
+        {
+            videoUrl: "/videos/video6.mp4",
+            title: "Banner 2",
+        },
+        {
+            videoUrl: "/videos/video5.mp4",
+            title: "Banner 3",
+        },
     ];
 
     const testimonials = [
@@ -76,7 +86,7 @@ export default function Welcome({ auth, categories, products }: { auth: any; cat
         <>
             <Head title="Welcome" />
             <div className="bg-gray-50 dark:bg-gray-900">
-                <Navbar auth={auth} />
+                <Navbar auth={auth} products={products} />
                 <Banner banners={banners} />
                 <Highlights />
                 <Categories categories={categories} />

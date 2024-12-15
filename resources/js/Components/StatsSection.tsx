@@ -8,11 +8,9 @@ const StatsSection = ({ stats }: { stats: any }) => {
 
     return (
         <div className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1fr,auto,auto,auto,1fr] gap-36 text-center">
-                {/* Empty Column */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1fr,auto,auto,auto,1fr] gap-32 text-center">
                 <div></div>
 
-                {/* Stats Content */}
                 {stats.map((stat: any) => (
                     <motion.div
                         key={stat.label}
@@ -26,7 +24,6 @@ const StatsSection = ({ stats }: { stats: any }) => {
                     </motion.div>
                 ))}
 
-                {/* Empty Column */}
                 <div></div>
             </div>
         </div>
