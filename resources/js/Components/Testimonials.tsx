@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay, Mousewheel, FreeMode } from 'swiper/modules';
 
 const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
     const [activeSlide, setActiveSlide] = useState(0);
@@ -15,7 +15,7 @@ const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
                     What Our Customers Say
                 </h2>
                 <Swiper
-                    modules={[Navigation, Pagination, Autoplay]}
+                    modules={[Navigation, Pagination, Autoplay, Mousewheel, FreeMode]}
                     loop
                     spaceBetween={10}
                     slidesPerView={5}
@@ -24,6 +24,8 @@ const Testimonials = ({ testimonials }: { testimonials: any[] }) => {
                         delay: 4000,
                         disableOnInteraction: false,
                     }}
+                    mousewheel={true}
+                    freeMode={true}
                     onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
                     pagination={{ clickable: true }}
                     breakpoints={{
